@@ -1,3 +1,5 @@
+-- This code is only to test user developer and webserver
+
 USE book_store;
 CREATE TABLE test_table (id INT);
 INSERT INTO test_table (id) VALUES (1);
