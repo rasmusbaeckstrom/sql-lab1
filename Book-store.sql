@@ -85,12 +85,18 @@ FROM
 GROUP BY
     a.id;
 
-CREATE USER 'developer'@'localhost' IDENTIFIED BY 'developer_password';
-GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER ON book_store.* TO 'developer'@'localhost';
-REVOKE CREATE USER, CREATE, DROP ON *.* FROM 'developer'@'localhost';
+DROP USER IF EXISTS 'developer'@'%';
+DROP USER IF EXISTS 'webserver'@'%';
 
-CREATE USER 'webserver'@'localhost' IDENTIFIED BY 'webserver_password';
-GRANT SELECT, INSERT, UPDATE, DELETE ON book_store.* TO 'webserver'@'localhost';
-REVOKE CREATE USER, CREATE, DROP ON *.* FROM 'webserver'@'localhost';
-
+-- Create developer user
+CREATE USER 'developer'@'%' IDENTIFIED BY 'developer_password';
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, ALTER ON book_store.* TO 'developer'@'%';
 FLUSH PRIVILEGES;
+
+-- Create webserver user
+CREATE USER 'webserver'@'%' IDENTIFIED BY 'webserver_password';
+GRANT SELECT, INSERT, UPDATE, DELETE ON book_store.* TO 'webserver'@'%';
+FLUSH PRIVILEGES;
+
+SHOW GRANTS FOR 'developer'@'%';
+SHOW GRANTS FOR 'webserver'@'%';
